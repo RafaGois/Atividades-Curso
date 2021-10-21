@@ -34,6 +34,7 @@ Node *insert(Node *root,Item x)
 {
     if (root == NULL)
     {
+        printf("");
         Node *aux = (Node*)malloc(sizeof(Node));
         aux->item = x;
         aux->left = NULL;
