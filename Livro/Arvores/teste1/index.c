@@ -1,141 +1,219 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Estrutura que representa um no,possui o valor e dois ponteiros.
-struct no
+struct item
 {
-    int isbn;
-    struct no *esq,*dir;
+    int cod;
+    int quantidade;
 };
-//Definimos que o arvBin é um ponteiro para a estrutura do no.
-typedef struct no* arvBin;
 
-arvBin* criaArvBin();
+typedef struct item Item;
+
+struct node
+{
+    Item item;
+    struct node *left;
+    struct node *right;
+};
+
+typedef struct node Node;
+
+Node *initialize()
+{
+    return NULL;
+}
+
+Item itemCreate (int cod)
+{
+    Item item;
+    item.cod = cod;
+    return item;
+}
+
+Item quantidadeCreate (int quantidade)
+{
+    Item item;
+    item.quantidade = quantidade;
+    return item;
+    
+}
+
+Node *insert(Node *root,Item x)
+{
+    if (root == NULL)
+    {
+        Node *aux = (Node*)malloc(sizeof(Node));
+        aux->item = x;
+        aux->left = NULL;
+        aux->right = NULL;
+        return aux;
+    } else
+    {
+        if (x.cod > root->item.cod)
+        {
+            root->right = insert(root->right,x);
+        } else if (x.cod < root->item.cod)
+        {
+            root->left = insert(root->left,x);
+        } 
+    }
+    return root;
+}
+
+void treePrint(Node *root)
+{
+    if (root != NULL)
+    {
+        printf("%d ",root->item.cod);
+        treePrint(root->left);
+        treePrint(root->right);
+    }
+}
+
+void treeFree(Node *root)
+{
+    if (root != NULL)
+    {
+        treeFree(root->left);
+        treeFree(root->right);
+        free(root);
+    }
+}
+
+Node *treeSearch (Node *root,int cod)
+{
+    if (root != NULL)
+    {
+        if (root->item.cod == cod)
+        {
+            return root;
+        } else
+        {
+            if (cod > root->item.cod)
+            {
+                return treeSearch(root->right,cod);
+            } else
+            {
+                return treeSearch(root->left,cod);
+            }
+        } 
+    }
+    return NULL;
+}
+
+Node *treeMin (Node *root)
+{
+    if (root != NULL)
+    {
+        Node *aux = root;
+        while (root->left != NULL)
+        {
+            aux = aux->left;
+        }
+        return aux;
+    }
+    return NULL;
+}
+
+Node *treeRemove (Node *root,int cod)
+{
+    if (root != NULL)
+    {
+        if (cod > root->item.cod)
+        {
+            root->right = treeRemove(root->right,cod);
+        } else if (cod < root->item.cod)
+        {
+            root->left = treeRemove(root->left,cod);
+        } else {
+            if (root->left == NULL && root->right ==NULL)
+            {
+                free(root);
+                return NULL;
+            } else if (root->left == NULL && root->right != NULL)
+            {
+                Node *aux = root->right;
+                free(root);
+                return aux;
+            } else if (root->left != NULL && root->right ==NULL)
+            {
+                    Node *aux = root->left;
+                    free(root);
+                    return aux; 
+            } else 
+            {
+                Node *aux = treeMin(root->right);
+                Item itemAux = aux->item;
+                root = treeRemove(root,itemAux.cod);
+                root->item = itemAux;
+            }
+        }
+        return root;
+    } 
+    return NULL;
+}
 
 int main(int argc, char const *argv[])
 {
-    // Ponteiro para arvBin(ponteiro de ponteiro)
-    arvBin* raiz;
-    raiz = criaArvBin();
+    Node *root = initialize();
+    int op = 1, n;
+
+    while (op != 0)
+    {
+        printf("\nEscolha uma das opcoes:");
+        printf("\n[1]- Inserir elementos");
+        printf("\n[2]- Excluir elementos");
+        printf("\n[3]- Buscar elementos");
+        printf("\n[4]- Imprimir elementos");
+        printf("\n[0]- Sair\n");
+        scanf("%d",&op);
+
+        switch (op)
+        {
+        case 1:
+            printf("Informe o número que deseja adicionar: ");
+            scanf("%d",&n);
+            root = insert(root,itemCreate(n));
+            break;
+        case 2:
+            printf("Informe o número que deseja excluir: ");
+            scanf("%d",&n);
+
+            root = treeRemove(root,n);
+
+            printf("Elemento: %d excluido...",n);
+            break;
+        case 3:
+            printf("Informe o número que deseja Buscar: ");
+            scanf("%d",&n);
+
+            procura(root,n);
+            break;
+        case 4:
+            printf("\nConteudo da arvore: ");
+            treePrint(root);
+            printf("\n");
+            break;
+        case 0:
+            printf("\nPrograma finalizado com sucesso!\n ");
+            break;
+        default:
+            printf("Opcao não encontrada...");
+            break;
+        }
+    }
     return 0;
 }
 
-// Raiz da arvore
-
-arvBin* criaArvBin ()
+void procura(Node *root,int n)
 {
-    arvBin* raiz = (arvBin*) malloc(sizeof(arvBin));
-    if (raiz != NULL)
-    {
-        *raiz = NULL;
-        return raiz;
-    }
-    
-}
-// Verifica um nó por vez e caso estejam vazios os libera.
-void liberaNo (struct no* no)
-{
-    if (no == NULL)
-    {
-        return;
-    }
-    liberaNo(no->esq);
-    liberaNo(no->dir);
-    free(no);
-    no = NULL;
-}
-
-// Caso o nõ raiz esteja vazio o libera
-void liberaArvBin (arvBin* raiz)
-{
-    if (raiz == NULL)
-    {
-        return;
-    }
-    liberaNo(*raiz);
-    free(raiz);
-}
-
-// Faz a soma do grau da árvore, executa a até encontrar um nó folha
-int alturaArvBin (arvBin *raiz)
-{
-    if (raiz == NULL)
-    {
-        return 0;
-    }
-    if (*raiz == NULL)
-    {
-        return 0;
-    }
-    int altesq = alturaArvBin(&((*raiz)->esq));
-    int altdir = alturaArvBin(&((*raiz)->dir));
-    if (altesq > altdir)
-    {
-        return (altesq + 1);
-    } else {
-        return(altdir + 1);
-    }
-}
-
-int insereArvBin (arvBin *raiz, int valor)
-{
-    // Se ocorreu algum erro na criação da arvore retorna 0, indicando o erro.
-    if (raiz == NULL)
-    {
-        return 0;
-    }
-    //Cria um novo no
-    struct no* novo;
-    // Aloca memoria de forma dinamica
-    novo = (struct no*) malloc(sizeof(struct no));
-    // Se ocorreu algum erro na alocacao de memoria do novo no, retorna 0 indicando o erro.
-    if (novo == NULL)
-    {
-        return 0;
-    }
-    // Guarda info do novo no e faz seus ponteiros apontarem para null
-    novo->isbn = valor;
-    novo->dir = NULL;
-    novo->esq = NULL;
-    //Vai encontrar onde inserir o novo no
-    // Se o nosso no especial estiver apontando para NULL, significa que temos uma arvore vazia.
-    // o nosso unico no eh o que acabou de ser criado.
-    if (*raiz == NULL)
-    {
-        *raiz = novo;
-        //Caso contrario será avaliado onde será colocado o novo no
-    } else {
-        // sera usado um auxiliar atual
-        struct no* atual = *raiz;
-        //outro ant ede anterior a atual
-        struct no* ant = NULL;
-        //enquanto o atual n for NULL, ou seja um nó folha
-        while (atual != NULL)
-        {
-            //vai guardar o end de atual.
-            ant = atual;
-            //se o valor que queremos inserir for igual a um existente na arvore, não será inserido.
-            if (valor == atual->isbn)
-            {
-                free(novo);
-                return 0;
-            }
-            //se for maior, vamos percorrer a arvore da direita
-            if (valor > atual->isbn)
-            {
-                atual = atual->dir;
-                //menor, a arvore da esquerda
-            } else
-            {
-                atual = atual->esq;
-            }
-            //tudo isso é feito até achar uma folha candidata
-            //o anterior vai ns guiar se vamos adicionar o novo no na direita ou na esquerda.
-        }
-        if (valor > ant->isbn)
-        {
-            ant->dir = novo;
-        }
-        return 1;
-    }
-}
+    Node *tmp = treeSearch(root,n);
+     if (tmp == NULL)
+     {
+        printf("\n>> Elemento nao encontrado <<\n");
+     } else
+     {
+        printf("\n>> Elemento Encontrado <<\n");
+        printf("Temp -> %d",tmp);
+     }
+} 

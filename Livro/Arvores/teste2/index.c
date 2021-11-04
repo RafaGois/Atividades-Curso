@@ -208,4 +208,4 @@ void procura(Node *root,int n)
         printf("\n>> Elemento Encontrado <<\n");
         printf("Temp -> %d",tmp);
      }
-}
+} 
