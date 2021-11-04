@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
     printf("\n");
 
-    bublesort(vet);
+    insertionSort(vet);
     printf("\nVetor depois do BubleSort:\n");
     for (size_t i = 0; i < TAM_MAX; i++)
     {
@@ -42,21 +42,21 @@ int agrega (int vet[])
     }
 }
 
-void bublesort (int vet[])
+void insertionSort (int vet[])
 {
+    int i,j,aux;
 
-int aux;
-
-    for (size_t contador = 0; contador < TAM_MAX; contador++)
+    for (size_t i = 1; i < TAM_MAX; i++)
     {
-        for (size_t i = 0; i < TAM_MAX - 1; i++)
+        aux = vet[i];
+        j = i - 1;
+        while (j >= 0 && vet[j] > aux)
         {
-            if (vet[i] > vet[i + 1])
-            {
-                aux = vet[i];
-                vet[i] = vet[i + 1];
-                vet[i + 1] = aux;
-            } 
+            vet[j + 1] = vet[j];
+            j = j - 1;
         }
+        vet[j + 1] = aux;
     }
+    
+    
 }

@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
     printf("\n");
 
-    bublesort(vet);
+    selectSort(vet);
     printf("\nVetor depois do BubleSort:\n");
     for (size_t i = 0; i < TAM_MAX; i++)
     {
@@ -42,21 +42,26 @@ int agrega (int vet[])
     }
 }
 
-void bublesort (int vet[])
+void selectSort (int vet[])
 {
 
-int aux;
+    int i,j,min,aux;
 
-    for (size_t contador = 0; contador < TAM_MAX; contador++)
+    for (size_t i = 0; i < (TAM_MAX - 1); i++)
     {
-        for (size_t i = 0; i < TAM_MAX - 1; i++)
+        min = i;
+        for (size_t j = (i+1); j < TAM_MAX; j++)
         {
-            if (vet[i] > vet[i + 1])
+            if (vet[j] < vet[min])
             {
-                aux = vet[i];
-                vet[i] = vet[i + 1];
-                vet[i + 1] = aux;
-            } 
+                min = j;
+            }
         }
+        if (i != min)
+        {
+            aux = vet[i];
+            vet[i] = vet[min];
+            vet[min] = aux;
+        }  
     }
 }
