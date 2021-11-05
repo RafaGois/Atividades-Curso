@@ -1,65 +1,131 @@
 #include <stdio.h>
-#include <stdlib.h>
-
-int SIZE = 20;
 
 int main(int argc, char const *argv[])
 {
-    int vet[] = {4,5,7,9,3,2,1,10,6,3,5,6,7,8,9,5,3,4,7,8};
-    int n;
-    int exLinear = 0,exBin = 0;
+    int tam,n;
 
-    for (int i = 0; i < SIZE; i++)
-    {
-        printf("|%d|",vet[i]);
-    }
+    printf("Informe o tamanho do vetor: ");
+    scanf("%d",&tam);
 
-    printf("\nInforme um número que deseja pesquisar: ");
+    int vet[tam];
+
+    emprega(vet,tam);
+    insertionSort(vet,tam);
+    imprime(vet,tam);
+
+    printf("\nInforme o número que deseja procurar: ");
     scanf("%d",&n);
 
-    printf("\n--- BUSCA LINEAR ---");
-    exLinear = busca_linear(vet,n);
-    printf("\nExecuções: %d", exLinear);
-
-    printf("\n--- BUSCA BINARIA ---");
-    exLinear = pesquia_binaria(vet,n,0,SIZE-1);
-    printf("\nExecuções: %d", exLinear);
-    
+    quantidade(pesquisa_sequencial(vet,tam,n));
+    quantidade(pesquisaBinRec(vet,n,0,tam));
 
     return 0;
 }
 
-int busca_linear(int vet[], int x)
-{ 
-    for (int i = 0; i < SIZE; i++)
-    {
-        if (vet[i] == x)
-        {
-            printf("Encontrou!");
-        }
-        
-    }
-    return i;
-}   
-
-int pesquia_binaria (int vet[], int key, int left, int right)
+void emprega(int vet[],int tam)
 {
-    int mid, contador = 0;
-    while (left < right)
+    for (size_t i = 0; i < tam; i++)
     {
-        mid = (left + right) /2;
-        if (vet[mid] == key)
+        printf("Informe o valor da posição %d: ",i);
+        scanf("%d",&vet[i]);
+    }  
+}
+
+void valida(int n)
+{
+    if (n < 0)
+    {
+        printf("\nValor não encontrado");
+    } else {
+        printf("\nValor encontrado na posicao %d",n);
+    }
+    
+}
+
+void imprime(int vet[],int tam)
+{
+    for (size_t i = 0; i < tam; i++)
+    {
+        printf("|%d|",vet[i]);
+    }
+}
+
+int pesquisa_binaria (int vet[], int key, int left, int right)
+{
+    int mid;
+    int contador;
+    mid = (left + right) / 2;
+
+    if (right < left)
+    {
+        return -1;
+    }
+    if (vet[mid] == key)
+    {
+        return mid;
+    } else if (key < vet[mid])
+    {
+        return pesquisa_binaria(vet,key,left, mid-1);
+    } else {
+        return pesquisa_binaria(vet,key,mid+1,right);
+    }
+}
+
+int pesquisaBinRec (int vet[], int key, int left, int right)
+{
+    int mid;
+    int contador = 0;
+    while (left <= right)
+    {
+        mid = (left + right) / 2;
+        if (key < vet[mid])
         {
-            return mid;
-        } else if (key < vet[mid])
+            right = mid - 1;
+        } else
         {
-            right = mid-1;
-            
-        } else {
-            left = mid+1;
-            
+            left = mid + 1;
         }
         contador++;
     }
     return contador;
+}
+
+int pesquisa_sequencial (int vet[], int tam, int n)
+{
+    int contador = 0;
+    int aux = 0;
+
+    for (int i = 0; i < tam; i++) {
+
+        if (vet[i] == n) {
+            
+        }
+        contador++;
+    }
+    if (aux <= 0)
+    {
+        
+    }
+    return contador;
+}
+
+int quantidade (int q) {
+    printf("\nExecuções: %d",q);
+}
+
+void insertionSort (int vet[],int tam)
+{
+    int i,j,aux;
+
+    for (size_t i = 1; i < tam; i++)
+    {
+        aux = vet[i];
+        j = i - 1;
+        while (j >= 0 && vet[j] > aux)
+        {
+            vet[j + 1] = vet[j];
+            j = j - 1;
+        }
+        vet[j + 1] = aux;
+    }
 }
