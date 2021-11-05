@@ -1,23 +1,23 @@
 #include <stdio.h>
 
+int TAM_MAX = 10;
+
 int main(int argc, char const *argv[])
 {
-    int tam,n;
+    int n;
 
-    printf("Informe o tamanho do vetor: ");
-    scanf("%d",&tam);
+    int vet[TAM_MAX];
 
-    int vet[tam];
-
-    emprega(vet,tam);
-    insertionSort(vet,tam);
-    imprime(vet,tam);
+    emprega(vet,TAM_MAX);
+    insertionSort(vet,TAM_MAX);
+    imprime(vet,TAM_MAX);
 
     printf("\nInforme o número que deseja procurar: ");
     scanf("%d",&n);
-
-    quantidade(pesquisa_sequencial(vet,tam,n));
-    quantidade(pesquisaBinRec(vet,n,0,tam));
+    printf("\n--- EXECUCOES SEQUENCIAL ---");
+    quantidade(pesquisa_sequencial(vet,n));
+    printf("\n--- EXECUCOES BINARIA ---");
+    quantidade(pesquisa_binaria(vet,n));
 
     return 0;
 }
@@ -50,31 +50,12 @@ void imprime(int vet[],int tam)
     }
 }
 
-int pesquisa_binaria (int vet[], int key, int left, int right)
-{
-    int mid;
-    int contador;
-    mid = (left + right) / 2;
-
-    if (right < left)
-    {
-        return -1;
-    }
-    if (vet[mid] == key)
-    {
-        return mid;
-    } else if (key < vet[mid])
-    {
-        return pesquisa_binaria(vet,key,left, mid-1);
-    } else {
-        return pesquisa_binaria(vet,key,mid+1,right);
-    }
-}
-
-int pesquisaBinRec (int vet[], int key, int left, int right)
+int pesquisa_binaria (int vet[], int key)
 {
     int mid;
     int contador = 0;
+    int left = 0;
+    int right = TAM_MAX;
     while (left <= right)
     {
         mid = (left + right) / 2;
@@ -90,12 +71,12 @@ int pesquisaBinRec (int vet[], int key, int left, int right)
     return contador;
 }
 
-int pesquisa_sequencial (int vet[], int tam, int n)
+int pesquisa_sequencial (int vet[], int n)
 {
     int contador = 0;
     int aux = 0;
 
-    for (int i = 0; i < tam; i++) {
+    for (int i = 0; i < TAM_MAX; i++) {
 
         if (vet[i] == n) {
             
