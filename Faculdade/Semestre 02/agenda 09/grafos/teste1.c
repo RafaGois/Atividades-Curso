@@ -14,11 +14,11 @@ int grafo[5][5] = {
 int main(int argc, char const *argv[])
 {
     
-    if (temLigacao(0,4) == 1)
+    if (temLigacao(2,2) == 1)
     {
-        printf("Tem ligacao");
+        printf("Tem ligacao\n");
     } else {
-        printf("Não tem ligacao");
+        printf("Não tem ligacao\n");
     }
     
     return 0;
