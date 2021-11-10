@@ -52,21 +52,22 @@ void imprime(int vet[],int tam)
 
 int pesquisa_binaria (int vet[], int key)
 {
-    int mid;
-    int contador = 0;
     int left = 0;
-    int right = TAM_MAX;
+    int right = TAM_MAX - 1;
+    int contador = 0;
+
     while (left <= right)
     {
-        mid = (left + right) / 2;
+        contador++;
+        int mid = (left + right) / 2;
+
         if (key < vet[mid])
         {
             right = mid - 1;
         } else
         {
             left = mid + 1;
-        }
-        contador++;
+        }      
     }
     return contador;
 }
