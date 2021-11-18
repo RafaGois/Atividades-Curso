@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<escola>
+    <sala id = "01">
+        <aluno id = "01">
+            <nome>João</nome>
+            <ultimoNome>Silva</ultimoNome>
+            <matricula>00001</matricula>
+            <media>70</media>
+        </aluno>
+        <aluno id = "02">
+            <nome>Maria</nome>
+            <ultimoNome>Cunha</ultimoNome>
+            <matricula>00002</matricula>
+            <media>75</media>
+        </aluno>
+        <aluno id = "03">
+            <nome>Marcos</nome>
+            <ultimoNome>Aurélio</ultimoNome>
+            <matricula>00003</matricula>
+            <media>80</media>
+        </aluno>
+    </sala>
+    <sala id = "02">
+        <aluno id = "01">
+            <nome>Matheus</nome>
+            <ultimoNome>Moura</ultimoNome>
+            <matricula>00004</matricula>
+            <media>70</media>
+        </aluno>
+        <aluno id = "02">
+            <nome>Joaquim</nome>
+            <ultimoNome>Branco</ultimoNome>
+            <matricula>00005</matricula>
+            <media>75</media>
+        </aluno>
+    </sala>
+</escola>

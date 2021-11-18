@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<raiz>
+    <cliente cod = "1">
+        <nome>Anibal</nome>
+        <sobrenome>Gonçalves</sobrenome>
+        <dtNascimento>29/02/1980</dtNascimento>
+        <dependentes>
+            <dependente nome = "Maria das Graças" sexo = "F"/>
+            <dependente nome = "Maria Das Lurdes" sexo = "F"/>
+            <dependente nome = "Maria Rita" sexo = "F"/>
+        </dependentes>
+    </cliente>
+    <cliente cod = "2">
+        <nome>Baptista</nome>
+        <sobrenome>Santos</sobrenome>
+        <dtNascimento>11/09/1995</dtNascimento>
+        <dependentes>
+            <dependente nome = "Júlia" sexo = "F"/>
+            <dependente nome = "Matheus" sexo = "M"/>
+        </dependentes>
+    </cliente>
+</raiz>

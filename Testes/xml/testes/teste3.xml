@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cadastro>
+    <estudante id = "01">
+        <primeiroNome>Rafael</primeiroNome>
+        <ultimoNome>Gois</ultimoNome>
+        <nota>80</nota>
+    </estudante>
+    <estudante id = "02">
+        <primeiroNome>Evellyn</primeiroNome>
+        <ultimoNome>Thibes</ultimoNome>
+        <nota>90</nota>
+    </estudante>
+    <estudante id = "03">
+        <primeiroNome>Filipe</primeiroNome>
+        <ultimoNome>Gois</ultimoNome>
+        <nota>85</nota>
+    </estudante>
+</cadastro>
